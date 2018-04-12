@@ -99,6 +99,28 @@
   </div>
 
 <script>
+  // keep track of most recent click
+  checkboxes = document.querySelectorAll('input[type=checkbox]');
+  let currentCheckbox;
+  document.getElementsByClassName('inbox')[0].addEventListener('click', (e) => {
+    let inBetween = false;
+    // begin tracking the individual checkbox click event
+    if (e.target.type === 'checkbox') {
+      if (e.shiftKey && e.target.checked) {
+        checkboxes.forEach(checkbox => {
+          if (checkbox === e.target || checkbox === lastChecked) {
+            inBetween = !inBetween;
+          }
+          if (inBetween) {
+            checkbox.checked = true;
+          }
+        });
+      }
+      // set last checked after everything else is done, now its different from e.target
+      lastChecked = e.target
+    }
+  })
+
 </script>
 </body>
 </html>
